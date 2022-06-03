@@ -2,3 +2,21 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+    cache: false
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html
+  datasource:
+    url: jdbc:mysql://192.168.1.106/seckill?useUnicode=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  type-aliases-package: org.yangxin.seckill.domain
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 3000
+  mapper-locations: classpath:org/yangxin/seckill/dao/*.xml

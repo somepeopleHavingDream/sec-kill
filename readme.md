@@ -6,7 +6,7 @@
 ### 2 课程技术点
 - 前端：Thymeleaf、Bootstrap、JQuery
 - 后端：SpringBoot、JSR303、MyBatis
-- 中间件：RabbitMQ、Redis、Druid
+- 中间件：RabbitMQ、Redis、Hikari
 ### 3 课程介绍
 #### 3.1 课程内容
 - 分布式会话
@@ -25,7 +25,7 @@
 ##### 第一章 项目框架搭建
 - SpringBoot环境搭建
 - 集成Thymeleaf，Result结果封装
-- 集成Mybatis+Druid
+- 集成Mybatis+Hikari
 - 集成Jedis+Redis安装+通用缓存Key封装
 ##### 第二章 实现登录功能
 - 数据库设计
