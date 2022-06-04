@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.yangxin.seckill.domain.User;
 import org.yangxin.seckill.redis.RedisService;
+import org.yangxin.seckill.redis.UserKey;
 import org.yangxin.seckill.result.Result;
 import org.yangxin.seckill.service.UserService;
 
@@ -42,16 +43,18 @@ public class SampleController {
 
     @RequestMapping("/redis/get")
     @ResponseBody
-    public Result<Long> redisGet() {
-        Long v1 = redisService.get("key1", Long.class);
-        return Result.success(v1);
+    public Result<User> redisGet() {
+        User user = redisService.get(UserKey.getById, "" + 1, User.class);
+        return Result.success(user);
     }
 
     @RequestMapping("/redis/set")
     @ResponseBody
-    public Result<String> redisSet() {
-        redisService.set("key2", "hello, mooc");
-        String str = redisService.get("key2", String.class);
-        return Result.success(str);
+    public Result<Boolean> redisSet() {
+        User user = new User();
+        user.setId(1);
+        user.setName("111111");
+        redisService.set(UserKey.getById, "" + 1, user);
+        return Result.success(true);
     }
 }

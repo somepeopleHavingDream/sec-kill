@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool;
  * @author yangxin
  * 2022/6/4 21:41
  */
-@SuppressWarnings({"UnusedReturnValue", "unchecked"})
+@SuppressWarnings({"UnusedReturnValue", "unchecked", "unused"})
 @Service
 public class RedisService {
 
@@ -21,18 +21,20 @@ public class RedisService {
         this.jedisPool = jedisPool;
     }
 
-    public <T> T get(String key, Class<T> clazz) {
+    public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
-            String str = jedis.get(key);
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            String str = jedis.get(realKey);
             return stringToBean(str, clazz);
         } finally {
             returnToPool(jedis);
         }
     }
 
-    public <T> boolean set(String key, T value) {
+    public <T> boolean set(KeyPrefix prefix, String key, T value) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -40,8 +42,51 @@ public class RedisService {
             if (str == null || str.length() <= 0) {
                 return false;
             }
-            jedis.set(key, str);
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            long seconds = prefix.expireSeconds();
+            if (seconds <= 0) {
+                jedis.set(realKey, str);
+            } else {
+                jedis.setex(realKey, seconds, str);
+            }
             return true;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    public <T> boolean exists(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            return jedis.exists(realKey);
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    public <T> Long incr(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            return jedis.incr(realKey);
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    public <T> Long decr(KeyPrefix prefix, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            // 生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            return jedis.decr(realKey);
         } finally {
             returnToPool(jedis);
         }
