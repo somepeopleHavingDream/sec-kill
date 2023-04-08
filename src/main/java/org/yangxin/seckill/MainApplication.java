@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SecKillApplication {
+public class MainApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SecKillApplication.class, args);
+        SpringApplication.run(MainApplication.class, args);
     }
 }
