@@ -1,5 +1,6 @@
 package org.yangxin.seckill.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/goods")
+@Slf4j
 public class GoodController {
 
     private final GoodService goodService;
@@ -26,6 +28,7 @@ public class GoodController {
 
     @RequestMapping(value="/to_list")
     public String list(HttpServletRequest request, HttpServletResponse response, Model model) {
+        log.info("list");
         goodService.listGoodsVo();
         return "ok";
     }
