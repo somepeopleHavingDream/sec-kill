@@ -3,6 +3,10 @@ package org.yangxin.seckill.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yangxin.seckill.dao.GoodDao;
+import org.yangxin.seckill.domain.SecKillGood;
+import org.yangxin.seckill.vo.GoodVO;
+
+import java.util.List;
 
 /**
  * @author yangxin
@@ -18,7 +22,19 @@ public class GoodService {
         this.goodDao = goodDao;
     }
 
-    public void listGoodsVo(){
-        goodDao.listGoodsVo();
+    public List<GoodVO> listGoodsVo(){
+        return goodDao.listGoodsVo();
+    }
+
+    public GoodVO getGoodVOByGoodId(Long goodId) {
+        return goodDao.getGoodVoByGoodId(goodId);
+    }
+
+    public boolean reduceStock(GoodVO goodVO) {
+        SecKillGood secKillGood = new SecKillGood();
+        secKillGood.setGoodsId(goodVO.getId());
+
+        int ret = goodDao.reduceStock(secKillGood);
+        return ret > 0;
     }
 }

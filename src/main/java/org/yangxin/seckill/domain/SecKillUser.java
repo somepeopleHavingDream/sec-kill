@@ -2,7 +2,7 @@ package org.yangxin.seckill.domain;
 
 import java.util.Date;
 
-public class SeckillUser {
+public class SecKillUser {
 	private Long id;
 	private String nickname;
 	private String password;

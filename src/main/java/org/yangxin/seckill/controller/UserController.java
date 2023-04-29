@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.yangxin.seckill.domain.SeckillUser;
+import org.yangxin.seckill.domain.SecKillUser;
 import org.yangxin.seckill.result.Result;
 
 /**
@@ -19,7 +19,7 @@ public class UserController {
 
     @RequestMapping("/info")
     @ResponseBody
-    public Result<SeckillUser> info(SeckillUser user) {
+    public Result<SecKillUser> info(SecKillUser user) {
         log.info("info->{}", JSON.toJSONString(user));
         return Result.success(user);
     }

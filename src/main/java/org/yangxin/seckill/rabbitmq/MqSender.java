@@ -27,4 +27,11 @@ public class MqSender {
 
         amqpTemplate.convertAndSend(MqConfig.QUEUE, msg);
     }
+
+    public void sendSecKillMessage(SecKillMessage secKillMessage) {
+        String msg = JSON.toJSONString(secKillMessage);
+        log.info("sendSecKillMessage secKillMessage->{}", msg);
+
+        amqpTemplate.convertAndSend(MqConfig.SEC_KILL_QUEUE, msg);
+    }
 }
