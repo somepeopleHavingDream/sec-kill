@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.yangxin.seckill.domain.User;
+import org.yangxin.seckill.rabbitmq.MqSender;
 import org.yangxin.seckill.redis.RedisService;
 import org.yangxin.seckill.redis.UserKey;
 import org.yangxin.seckill.result.Result;
@@ -21,11 +22,13 @@ public class SampleController {
 
     private final UserService userService;
     private final RedisService redisService;
+    private final MqSender mqSender;
 
     @Autowired
-    public SampleController(UserService userService, RedisService redisService) {
+    public SampleController(UserService userService, RedisService redisService, MqSender mqSender) {
         this.userService = userService;
         this.redisService = redisService;
+        this.mqSender = mqSender;
     }
 
     @RequestMapping("/thymeleaf")
@@ -56,5 +59,12 @@ public class SampleController {
         user.setName("111111");
         redisService.set(UserKey.getById, "" + 1, user);
         return Result.success(true);
+    }
+
+    @RequestMapping("/mq")
+    @ResponseBody
+    public Result<?> mq() {
+        mqSender.send("hello world");
+        return Result.success("hello world");
     }
 }
