@@ -128,6 +128,15 @@ public class SecKillController implements InitializingBean {
     @GetMapping("/path")
     @ResponseBody
     public Result<String> getSecKillPath() {
+        /*
+            为什么要做秒杀地址的隐藏？
+
+            更有效的实现方式是，在活动开始的时候，通过后台，重新设置一个秒杀的url，客户端在拿到这个url之后，直接跳转到这个真正的秒杀页面。
+            这么做的目的是为什么呢？
+            为了防止恶意用户提前抓取网页，对网页进行分析，然后写出刷接口的机器人工具。
+            活动开始之前，恶意用户就算分析网页写了刷接口的程序也没用，因为那个页面并不是真正的秒杀页面。
+         */
+
         return Result.success("ok");
     }
 }
