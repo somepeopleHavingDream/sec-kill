@@ -9,12 +9,12 @@ spring:
     servlet:
       content-type: text/html
   datasource:
-    url: jdbc:mysql://192.168.1.102/seckill?useUnicode=true
+    url: jdbc:mysql://192.168.1.104/seckill?useUnicode=true
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   rabbitmq:
-    host: 192.168.1.102
+    host: 192.168.1.104
     port: 5672
     username: guest
     password: guest
@@ -41,7 +41,7 @@ mybatis:
     default-statement-timeout: 3000
   mapper-locations: classpath:org/yangxin/seckill/dao/*.xml
 redis:
-  host: 192.168.1.102
+  host: 192.168.1.104
   port: 6379
   timeout: 3
 #  password: 123456

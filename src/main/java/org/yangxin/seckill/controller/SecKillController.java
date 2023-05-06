@@ -6,10 +6,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.yangxin.seckill.access.AccessLimit;
 import org.yangxin.seckill.domain.SecKillOrder;
 import org.yangxin.seckill.domain.SecKillUser;
 import org.yangxin.seckill.rabbitmq.MqSender;
@@ -124,5 +122,12 @@ public class SecKillController implements InitializingBean {
         mqSender.sendSecKillMessage(secKillMessage);
         // 排队中
         return Result.success(0);
+    }
+
+    @AccessLimit(seconds = 5, maxCount = 5)
+    @GetMapping("/path")
+    @ResponseBody
+    public Result<String> getSecKillPath() {
+        return Result.success("ok");
     }
 }
